@@ -1,0 +1,34 @@
+# mail-invoice configuration
+# Copy this file to config.toml and fill in your credentials.
+
+[mail]
+host = "imap.gmx.net"
+port = 993
+username = "user@gmx.de"
+# Leave password empty to use MAIL_INVOICE_PASSWORD environment variable instead
+password = ""
+use_ssl = true
+folder = "INBOX"
+# Mark emails as read on the server after successfully saving them
+mark_as_read = true
+# Only check emails from the last N days (leave unset to check all unread).
+# Can be overridden per-run with --since-days on the CLI.
+# lookback_days = 30
+
+[storage]
+target_dir = "/home/user/invoices"
+year_subdirs = true
+month_subdirs = true
+
+[detection]
+subject_keywords = [
+    "invoice", "rechnung", "bill", "quittung", "beleg",
+    "faktura", "receipt", "statement", "zahlung", "mahnung",
+]
+body_keywords = [
+    "invoice", "rechnung", "total amount", "gesamtbetrag",
+]
+# Only save attachments with these extensions
+attachment_extensions = [".pdf", ".png", ".jpg", ".jpeg", ".tiff"]
+# Set true to skip keyword-matched emails that have no valid attachment
+require_attachment = false
